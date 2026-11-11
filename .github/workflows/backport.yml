@@ -1,0 +1,32 @@
+name: Backport merged pull request
+
+# Thin wrapper that delegates to velero-io/velero's reusable backport workflow
+# so this repo stays in sync with core's backport automation instead of
+# maintaining a separate, drifted local copy.
+#
+# Requires "Allow GitHub Actions to create and approve pull requests" enabled
+# under Settings > Actions > General for THIS repo. Without it,
+# korthout/backport-action's PR-creation call fails even though this workflow
+# requests pull-requests: write.
+#
+# This fork has no `release-*` branches, so target branches must be named in
+# full when requesting a backport, e.g. `/backport v0.23.1-velero-patch`.
+# (Core's bare-version shorthand like `/backport 1.17` expands to
+# `release-1.17` and does not apply here.)
+#
+# Depends on the reusable workflow existing on velero-io/velero main:
+# https://github.com/velero-io/velero/pull/10281
+on:
+  pull_request_target:
+    types: [closed]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  backport:
+    uses: velero-io/velero/.github/workflows/backport.yml@main
