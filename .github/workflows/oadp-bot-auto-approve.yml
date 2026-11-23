@@ -1,4 +1,4 @@
-name: "CVE-bot Auto Approve"
+name: "OADP-bot Auto Approve"
 # Companion to the openshift/release tide query that pools rebasebot-app
 # PRs on the oadp-bot label: branch protection still requires reviews, and
 # these PRs (go.mod/go.sum dependency bumps from the rebase/CVE pipelines,
